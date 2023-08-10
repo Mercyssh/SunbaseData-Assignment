@@ -30,7 +30,12 @@ public class APICaller : MonoBehaviour
                     break;
 
                 case UnityWebRequest.Result.Success:
-                    Debug.Log("Data : " + webRequest.downloadHandler.text);
+    
+                    // Retrieved data has spaces and newlines before the actual JSON content starts,
+                    // We first sanitize this using the .Trim() method
+                    string data = webRequest.downloadHandler.text.Trim();
+
+                    Debug.Log("Data : " + data);
                     break;
             }
         }

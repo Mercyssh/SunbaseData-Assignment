@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Text.RegularExpressions;
 using System.Collections;
 
 public class APICaller : MonoBehaviour
@@ -35,6 +36,11 @@ public class APICaller : MonoBehaviour
                     // Retrieved data has spaces and newlines before the actual JSON content starts,
                     // We first sanitize this using the .Trim() method
                     string data = webRequest.downloadHandler.text.Trim();
+
+                    // We also need to edit all the numerical keys "1", "2", "3" to "_1", "_2", "_3" and so on
+                    // This is because in C# variable names cannot start with a number
+                    // and In order to properly map the values to a class, the keys in the JSON should match variables in the class..
+                    data = Regex.Replace(data, @"""(\d+)"":", match => $"\"_{match.Groups[1].Value}\":");
 
                     // Then we Serialize it to our defined Response Class
                     Response response = JsonUtility.FromJson<Response>(data);

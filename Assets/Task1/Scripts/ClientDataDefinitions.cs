@@ -33,6 +33,11 @@ public class Data
     public ClientData _2;
     public ClientData _3;
 
+    // This function will treat the Data fields as an array and return them
+    public ClientData[] AsArray()
+    {
+        return new ClientData[] { _1, _2, _3 }; // Extend if more fields are added
+    }
 }
 
 [System.Serializable]

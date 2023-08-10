@@ -11,6 +11,7 @@ public class APICaller : MonoBehaviour
         StartCoroutine(GetRequest(apiUrl));
     }
 
+    //Sends webRequest to fetch API data. If successful, updates the UI to represent the data.
     IEnumerator GetRequest(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
@@ -35,7 +36,13 @@ public class APICaller : MonoBehaviour
                     // We first sanitize this using the .Trim() method
                     string data = webRequest.downloadHandler.text.Trim();
 
-                    Debug.Log("Data : " + data);
+                    // Then we Serialize it to our defined Response Class
+                    Response response = JsonUtility.FromJson<Response>(data);
+
+                    //And if the UI updater class is present, then prompt it to update the Canvas Gameobject
+                    UIUpdater uiUpdater = GetComponent<UIUpdater>();
+                    if (uiUpdater == null) break;
+                    else uiUpdater.Update(response);
                     break;
             }
         }

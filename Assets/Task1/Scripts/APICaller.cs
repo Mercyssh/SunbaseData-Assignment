@@ -42,7 +42,7 @@ public class APICaller : MonoBehaviour
                     //And if the UI updater class is present, then prompt it to update the Canvas Gameobject
                     UIUpdater uiUpdater = GetComponent<UIUpdater>();
                     if (uiUpdater == null) break;
-                    else uiUpdater.Update(response);
+                    else uiUpdater.UpdateUI(response);
                     break;
             }
         }

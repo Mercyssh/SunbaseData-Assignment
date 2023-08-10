@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class UIUpdater : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject list;
 
-    // Update is called once per frame
-    void Update()
+    //This is a reference to a prefab of a list Item
+    public GameObject template;
+
+    public void UpdateUI(Response response)
     {
-        
+                    
     }
 }

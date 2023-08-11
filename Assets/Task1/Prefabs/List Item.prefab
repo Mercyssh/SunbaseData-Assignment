@@ -173,6 +173,7 @@ GameObject:
   - component: {fileID: 1148351528586814786}
   - component: {fileID: 700179515134452038}
   - component: {fileID: 3215228706801832059}
+  - component: {fileID: 8324937243510620772}
   m_Layer: 5
   m_Name: List Item
   m_TagString: Untagged
@@ -283,7 +284,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1148351528586814786}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3215228706801832059}
+        m_TargetAssemblyTypeName: ListItem, Assembly-CSharp
+        m_MethodName: PopOut
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3215228706801832059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,3 +311,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LabelObject: {fileID: 5633686793475137835}
   PointsObject: {fileID: 6587302956893838112}
+  fadeInDuration: 0.5
+  popOutDuration: 0.5
+  delay: 0.1
+--- !u!225 &8324937243510620772
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7196969110694104593}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

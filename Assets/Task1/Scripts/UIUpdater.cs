@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIUpdater : MonoBehaviour
 {
     //Reference to the container of list
     public GameObject listContainer;
     public GameObject filterDropDown;
+    public Text fetchingData;
 
     //We store a local reference to the retrieved data.
     [HideInInspector]
@@ -24,6 +26,13 @@ public class UIUpdater : MonoBehaviour
     public void UpdateUI()
     {
         HideAll();
+
+        //Hides the "fetching data.." placeholder text
+        fetchingData.DOFade(0f, .2f).OnComplete(() =>
+        {
+            if (fetchingData.gameObject != null)
+                Destroy(fetchingData.gameObject);
+        });
 
         // Again, since 'Data' class is actually a sequence of manually defined variables
         // We need to manually call the function to return them as an array in a predefined order
@@ -52,24 +61,27 @@ public class UIUpdater : MonoBehaviour
         {
 
             //Check if any filters are in place, and move onto next client as required
-            if (filter == filterType.Managers && !client.isManager) continue;
-            if (filter == filterType.NonManagers && client.isManager) continue;
+            if ((filter == filterType.Managers && !client.isManager) || (filter == filterType.NonManagers && client.isManager)){
+                index++;
+                continue;
+            }
 
             GameObject newItem = Instantiate(template, listContainer.transform);
             ListItem listItem = newItem.GetComponent<ListItem>();
 
             //We pass on the ClientData to the newly created list Item.
             //This will be required when the listItem wants to open a popup window.
-            listItem.clientData = clientDataArray[index];
+            if (index < clientDataArray.Length)
+                listItem.clientData = clientDataArray[index];
 
             //Update Label
-            listItem.LabelObject.text = "Label : "+client.label;
+            listItem.labelObject.text = "Label : "+client.label;
 
             //Find appropriate points value for each item
             string pointsValue = "???";
             if (index < clientDataArray.Length)
                 pointsValue = clientDataArray[index].points.ToString();
-            listItem.PointsObject.text = "Points : " + pointsValue;
+            listItem.pointsObject.text = "Points : " + pointsValue;
 
             //Set animation Delay
             listItem.SetDelay(index * listItem.delay);
@@ -85,4 +97,5 @@ public class UIUpdater : MonoBehaviour
             child.GetComponent<ListItem>().PopOut();
         }
     }
+
 }

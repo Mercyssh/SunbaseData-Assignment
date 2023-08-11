@@ -7,8 +7,9 @@ using DG.Tweening;
 public class ListItem : MonoBehaviour
 {
     [Header("References")]
-    public Text LabelObject;
-    public Text PointsObject;
+    public Text labelObject;
+    public Text pointsObject;
+    public GameObject popupPrefab;
 
     [Header("Animation Settings")]
     public float fadeInDuration = .5f;
@@ -50,9 +51,11 @@ public class ListItem : MonoBehaviour
         }
     }
 
-    public void showPopUp()
+    public void CreatePopUp()
     {
-
+        //Parent.parent refers to the Canvas Object
+        GameObject popUp = Instantiate(popupPrefab, transform.parent.parent);
+        popUp.GetComponent<PopupController>().clientData = clientData;
     }
 
     //This function is called when instantiating,

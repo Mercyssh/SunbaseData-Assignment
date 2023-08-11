@@ -1,18 +1,27 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIUpdater : MonoBehaviour
 {
     //Reference to the container of list
     public GameObject listContainer;
+    public GameObject filterDropDown;
 
     //We store a local reference to the retrieved data.
     [HideInInspector]
     public Response response;
 
+    public enum filterType
+    {
+        All,
+        Managers,
+        NonManagers
+    }
+
     //This is a reference to a prefab of a list Item
     public GameObject template;
 
-    public void ShowAll()
+    public void UpdateUI()
     {
         HideAll();
 
@@ -22,9 +31,30 @@ public class UIUpdater : MonoBehaviour
         // if External libraries were allowed to be used.
         ClientData[] dataArray = response.data.AsArray();
 
+        // Retrieve current filter option from dropdown
+        // This will be used afterwards to filter out required cards.
+        filterType filter = filterType.All;
+        switch (filterDropDown.GetComponent<Dropdown>().value)
+        {
+            case 0:
+                filter = filterType.All;
+                break;
+            case 1:
+                filter = filterType.Managers;
+                break;
+            case 2: 
+                filter = filterType.NonManagers;
+                break;
+        }
+
         int index = 0;
         foreach (Client client in response.clients)
         {
+
+            //Check if any filters are in place, and move onto next client as required
+            if (filter == filterType.Managers && !client.isManager) continue;
+            if (filter == filterType.NonManagers && client.isManager) continue;
+
             GameObject newItem = Instantiate(template, listContainer.transform);
             ListItem listItem = newItem.GetComponent<ListItem>();
 
@@ -51,15 +81,4 @@ public class UIUpdater : MonoBehaviour
             child.GetComponent<ListItem>().PopOut();
         }
     }
-
-    private void ShowManagers()
-    {
-        HideAll();
-    }
-
-    private void ShowNonManager()
-    {
-        HideAll();
-    }
-
 }

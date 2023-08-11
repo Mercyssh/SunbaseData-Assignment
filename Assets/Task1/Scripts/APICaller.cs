@@ -50,7 +50,7 @@ public class APICaller : MonoBehaviour
                     if (uiUpdater == null) break;
                     else {
                         uiUpdater.response = response;
-                        uiUpdater.ShowAll();
+                        uiUpdater.UpdateUI();
                     }
                     break;
             }

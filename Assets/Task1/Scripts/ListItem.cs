@@ -36,6 +36,7 @@ public class ListItem : MonoBehaviour
         if (TryGetComponent(out RectTransform rectTransform))
         {
             //We want the width to remain the same, but the height to transition to 0
+            
             Vector2 target = GetComponent<RectTransform>().sizeDelta;
             target.y = 0;
 

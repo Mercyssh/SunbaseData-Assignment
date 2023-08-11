@@ -15,6 +15,9 @@ public class ListItem : MonoBehaviour
     public float popOutDuration = .5f;
     public float delay = .2f;
 
+    [HideInInspector]
+    public ClientData clientData;
+
     private void Start()
     {
         FadeIn();
@@ -45,6 +48,11 @@ public class ListItem : MonoBehaviour
                     Destroy(gameObject); 
             });
         }
+    }
+
+    public void showPopUp()
+    {
+
     }
 
     //This function is called when instantiating,

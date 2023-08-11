@@ -29,7 +29,7 @@ public class UIUpdater : MonoBehaviour
         // We need to manually call the function to return them as an array in a predefined order
         // This would not have to be done if the data object in JSON was presented as an Array, OR 
         // if External libraries were allowed to be used.
-        ClientData[] dataArray = response.data.AsArray();
+        ClientData[] clientDataArray = response.data.AsArray();
 
         // Retrieve current filter option from dropdown
         // This will be used afterwards to filter out required cards.
@@ -58,13 +58,17 @@ public class UIUpdater : MonoBehaviour
             GameObject newItem = Instantiate(template, listContainer.transform);
             ListItem listItem = newItem.GetComponent<ListItem>();
 
+            //We pass on the ClientData to the newly created list Item.
+            //This will be required when the listItem wants to open a popup window.
+            listItem.clientData = clientDataArray[index];
+
             //Update Label
             listItem.LabelObject.text = "Label : "+client.label;
 
             //Find appropriate points value for each item
             string pointsValue = "???";
-            if (index < dataArray.Length)
-                pointsValue = dataArray[index].points.ToString();
+            if (index < clientDataArray.Length)
+                pointsValue = clientDataArray[index].points.ToString();
             listItem.PointsObject.text = "Points : " + pointsValue;
 
             //Set animation Delay
